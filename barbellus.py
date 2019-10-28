@@ -17,14 +17,13 @@ def print_plates(plates_used, weight_to_lift):
         print(this_plate)
         plate -= this_plate
 
-def main():
-    weight_to_lift = 225-45
-    available_plates = [2*1, 2*5, 2*10, 2*25, 2*45, 2*55]
-    plates_used = [0]*(weight_to_lift+1)
-    count_of_plates = [0]*(weight_to_lift+1)
+if __name__ == "__main__":
+    weight_to_lift = 320
+    bar_weight = 45
+    available_plates = [2*1, 2*5, 2*10, 2*25, 2*45]
+    plates_used = [0]*(weight_to_lift-bar_weight+1)
+    count_of_plates = [0]*(weight_to_lift-bar_weight+1)
 
     print("Lifting [", weight_to_lift, "lb ] requires")
-    print(select_plates(available_plates, weight_to_lift, count_of_plates, plates_used), "plates")
-    print_plates(plates_used,weight_to_lift)
-
-main()
+    print(select_plates(available_plates, weight_to_lift-bar_weight, count_of_plates, plates_used), "plates")
+    print_plates(plates_used, weight_to_lift-bar_weight)
