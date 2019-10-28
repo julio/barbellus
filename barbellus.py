@@ -1,29 +1,44 @@
-def select_plates(available_plates, weight_to_lift, min_plates, plates_used):
-    for pounds in range(weight_to_lift+1):
-        count_of_plates = pounds
-        new_plate = 1
-        for j in [c for c in available_plates if c <= pounds]:
-            if min_plates[pounds-j] + 1 < count_of_plates:
-                count_of_plates = min_plates[pounds-j]+1
-                new_plate = j
-        min_plates[pounds] = count_of_plates
-        plates_used[pounds] = new_plate
-    return min_plates[weight_to_lift]
+class Barbellus:
+    def __init__(self, plates_available, bar_weight):
+        self.plates_available = plates_available
+        self.bar_weight = bar_weight
 
-def print_plates(plates_used, weight_to_lift):
-    plate = weight_to_lift
-    while plate > 0:
-        this_plate = plates_used[plate]
-        print(this_plate)
-        plate -= this_plate
+    def select_plates(self, weight_to_lift, plates_used):
+        min_plates = [0]*(weight_to_lift+1)
+
+        for pounds in range(weight_to_lift-self.bar_weight+1):
+            count_of_plates = pounds
+            new_plate = 1
+            for j in [c*2 for c in self.plates_available if c <= pounds]:
+                if min_plates[pounds-j] + 1 < count_of_plates:
+                    count_of_plates = min_plates[pounds-j]+1
+                    new_plate = j
+            min_plates[pounds] = count_of_plates
+            plates_used[pounds] = new_plate
+
+        print(plates_used)
+        print(count_of_plates)
+
+        return min_plates[weight_to_lift-self.bar_weight]
+
+    def plates(self, plates_used, weight_to_lift):
+        plates = []
+        weight = weight_to_lift-self.bar_weight
+        while weight > 0:
+            this_plate = plates_used[weight]
+            plates.append(int(this_plate/2))
+            weight -= this_plate
+        return plates
 
 if __name__ == "__main__":
-    weight_to_lift = 320
+    weight_to_lift = 65
     bar_weight = 45
-    available_plates = [2*1, 2*5, 2*10, 2*25, 2*45]
-    plates_used = [0]*(weight_to_lift-bar_weight+1)
-    count_of_plates = [0]*(weight_to_lift-bar_weight+1)
+    plates_used = [0]*(weight_to_lift+1)
 
-    print("Lifting [", weight_to_lift, "lb ] requires")
-    print(select_plates(available_plates, weight_to_lift-bar_weight, count_of_plates, plates_used), "plates")
-    print_plates(plates_used, weight_to_lift-bar_weight)
+    plates_available = [1, 5, 10, 25, 35, 45]
+
+    barbellus = Barbellus(plates_available, bar_weight)
+    plates_to_use = barbellus.select_plates(weight_to_lift, plates_used)
+    plates = barbellus.plates(plates_used, weight_to_lift)
+
+    print("Lifting [", weight_to_lift, "lb ] requires", plates_to_use, "plates on each side: ", plates)
