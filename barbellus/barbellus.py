@@ -8,8 +8,8 @@ class Barbellus(object):
         self.plates_available = plates_available
         self.bar_weight = bar_weight
         self.weight_to_lift = int((total_weight_to_lift-bar_weight) / 2) # weight on each side
-        self.plates_used = [0]*(self.weight_to_lift+1) # number of plates for each number of pounds
         self.min_plates = [0]*(self.weight_to_lift+1)
+        self.plates_used = {}
 
     def build_plate_rack(self):
         for pounds in range(self.weight_to_lift+1):

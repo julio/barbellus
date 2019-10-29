@@ -4,7 +4,7 @@ from barbellus.exceptions import InvalidWeight
 
 class TestBarbellus(unittest.TestCase):
     def setUp(self):
-        self.plates_available = [1, 5, 10, 25, 45]
+        self.plates_available = [1, 5, 10, 25, 35, 45]
 
     def test_less_than_bar(self):
         weight_to_lift = 35
@@ -13,11 +13,11 @@ class TestBarbellus(unittest.TestCase):
     def test_empty_bar(self):
         self.assertEqual([], self.__plates(45))
 
-    def test_65(self):
-        self.assertEqual([10], self.__plates(65))
-
     def test_47(self):
         self.assertEqual([1], self.__plates(47))
+
+    def test_65(self):
+        self.assertEqual([10], self.__plates(65))
 
     def test_67(self):
         self.assertEqual([10, 1], self.__plates(67))
@@ -30,6 +30,9 @@ class TestBarbellus(unittest.TestCase):
 
     def test_95(self):
         self.assertEqual([25], self.__plates(95))
+
+    def test_115(self):
+        self.assertEqual([35], self.__plates(115))
 
     def test_135(self):
         self.assertEqual([45], self.__plates(135))
