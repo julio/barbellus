@@ -15,14 +15,12 @@ class Barbellus(object):
         for pounds in range(self.weight_to_lift+1):
             count_of_plates = pounds
             new_plate = 1
-            for j in [c for c in self.plates_available if c <= pounds]:
-                if self.min_plates[pounds-j] + 1 < count_of_plates:
-                    count_of_plates = self.min_plates[pounds-j]+1
-                    new_plate = j
+            for weight in [plate for plate in self.plates_available if plate <= pounds]:
+                if self.min_plates[pounds-weight] + 1 < count_of_plates:
+                    count_of_plates = self.min_plates[pounds-weight]+1
+                    new_plate = weight
             self.min_plates[pounds] = count_of_plates
             self.plates_used[pounds] = new_plate
-
-        # return min_plates[self.weight_to_lift-self.bar_weight]
         return self
 
     def select_plates(self):
