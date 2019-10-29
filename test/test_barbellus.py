@@ -6,92 +6,44 @@ class TestBarbellus(unittest.TestCase):
     def setUp(self):
         self.plates_available = [1, 5, 10, 25, 45]
 
-    def test_empty_bar(self):
-        weight_to_lift = 45
-
-        barbellus = Barbellus(self.plates_available, weight_to_lift)
-        plates = barbellus.build_plate_rack().select_plates()
-
-        self.assertEqual([], plates)
-
     def test_less_than_bar(self):
         weight_to_lift = 35
         self.assertRaises(InvalidWeight, Barbellus, self.plates_available, weight_to_lift)
 
+    def test_empty_bar(self):
+        self.assertEqual([], self.__plates(45))
+
     def test_65(self):
-        weight_to_lift = 65
-
-        barbellus = Barbellus(self.plates_available, weight_to_lift)
-        plates = barbellus.build_plate_rack().select_plates()
-
-        self.assertEqual([10], plates)
+        self.assertEqual([10], self.__plates(65))
 
     def test_47(self):
-        weight_to_lift = 47
-
-        barbellus = Barbellus(self.plates_available, weight_to_lift)
-        plates = barbellus.build_plate_rack().select_plates()
-
-        self.assertEqual([1], plates)
+        self.assertEqual([1], self.__plates(47))
 
     def test_67(self):
-        weight_to_lift = 67
+        self.assertEqual([10, 1], self.__plates(67))
 
-        barbellus = Barbellus(self.plates_available, weight_to_lift)
-        plates = barbellus.build_plate_rack().select_plates()
-
-        self.assertEqual([10, 1], plates)
-
-    @unittest.SkipTest
     def test_69(self):
-        weight_to_lift = 69
+        self.assertEqual([10, 1, 1], self.__plates(69))
 
-        barbellus = Barbellus(self.plates_available, weight_to_lift)
-        plates = barbellus.build_plate_rack().select_plates()
-        barbellus.debug()
-        self.assertEqual([10, 2], plates)
-
-    @unittest.SkipTest
     def test_75(self):
-        weight_to_lift = 75
-
-        barbellus = Barbellus(self.plates_available, weight_to_lift)
-        plates = barbellus.build_plate_rack().select_plates()
-        barbellus.debug()
-        self.assertEqual([10, 5], plates)
+        self.assertEqual([10, 5], self.__plates(75))
 
     def test_95(self):
-        weight_to_lift = 95
-
-        barbellus = Barbellus(self.plates_available, weight_to_lift)
-        plates = barbellus.build_plate_rack().select_plates()
-
-        self.assertEqual([25], plates)
-
+        self.assertEqual([25], self.__plates(95))
 
     def test_135(self):
-        weight_to_lift = 135
-
-        barbellus = Barbellus(self.plates_available, weight_to_lift)
-        plates = barbellus.build_plate_rack().select_plates()
-
-        self.assertEqual([45], plates)
-
-    def test_225(self):
-        weight_to_lift = 225
-
-        barbellus = Barbellus(self.plates_available, weight_to_lift)
-        plates = barbellus.build_plate_rack().select_plates()
-
-        self.assertEqual([45, 45], plates)
+        self.assertEqual([45], self.__plates(135))
 
     def test_185(self):
-        weight_to_lift = 185
+        self.assertEqual([45, 25], self.__plates(185))
 
+    def test_225(self):
+        self.assertEqual([45, 45], self.__plates(225))
+
+    def __plates(self, weight_to_lift):
         barbellus = Barbellus(self.plates_available, weight_to_lift)
-        plates = barbellus.build_plate_rack().select_plates()
+        return barbellus.build_plate_rack().select_plates()
 
-        self.assertEqual([45, 25], plates)
 
 
 if __name__ == '__main__':
