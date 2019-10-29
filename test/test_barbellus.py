@@ -4,7 +4,7 @@ from barbellus.exceptions import InvalidWeight
 
 class TestBarbellus(unittest.TestCase):
     def setUp(self):
-        self.plates_available = [1, 5, 10, 25, 35, 45]
+        self.plates_available = [1, 5, 10, 25, 45]
 
     def test_empty_bar(self):
         weight_to_lift = 45
